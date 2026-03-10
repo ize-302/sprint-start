@@ -1,5 +1,36 @@
 import { input, select, confirm } from "@inquirer/prompts";
-import { exec } from "child_process";
+import { writeFileSync } from "fs";
+import { spawnSync } from "child_process";
+import { join } from "path";
+import { tmpdir } from "os";
+
+const script = `#!/bin/bash
+name=$1
+description=$2
+language=$3
+type=$4
+boot_version=$5
+group_id=$6
+artifact_id=$7
+package_name=$8
+java_version=$9
+target=\${10}
+
+cmd=(
+  spring init
+  --name "\$name"
+  --description "\$description"
+  --language "\$language"
+  --type "\$type"
+  --boot-version "\$boot_version"
+  --group-id "\$group_id"
+  --artifact-id "\$artifact_id"
+  --package-name "\$package_name"
+  --java-version "\$java_version"
+  "\$target"
+)
+
+"\${cmd[@]}"`;
 
 const init = async () => {
   const name = await input({
@@ -85,21 +116,28 @@ const init = async () => {
 
   const confirmation = await confirm({ message: "Continue with setup?" });
 
-  if (confirmation == true) {
-    exec(
-      `bash ./src/script.sh "${name}" "${description}" "${language}" "${type}" "${boot_version}" "${group_id}" "${artifact_id}" "${package_name}" "${java_version}"  "${target}"`,
-      (err, stdout, stdrr) => {
-        if (err) {
-          console.log(err);
-        }
-        if (stdrr) {
-          console.log(stdrr);
-        }
-        if (stdout) {
-          console.log(stdout);
-        }
-      },
+  if (confirmation) {
+    const tmpScriptPath = join(tmpdir(), "script.sh");
+    writeFileSync(tmpScriptPath, script, { mode: 0o755 });
+
+    const result = spawnSync(
+      tmpScriptPath,
+      [
+        name,
+        description,
+        language,
+        type,
+        boot_version,
+        group_id,
+        artifact_id,
+        package_name,
+        java_version.toString(),
+        target,
+      ],
+      { stdio: "inherit" },
     );
+
+    if (result.error) console.error(result.error);
   }
 };
 

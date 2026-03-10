@@ -58,7 +58,7 @@ Available binaries:
 ## Building
 
 ```bash
-bun build.ts
+bun run build
 ```
 
-Binaries are output to `./build/`.
+Binaries are output to `./dist/`.

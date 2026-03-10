@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun build.ts"
+    "build": "bun build.ts --bundle --target bun"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.3",
