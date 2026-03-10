@@ -2,6 +2,8 @@
 
 An interactive CLI tool for scaffolding Spring Boot projects — a wrapper around the [Spring CLI](https://docs.spring.io/spring-cli/reference/) that guides you through project setup with prompts.
 
+![demo](demo.gif)
+
 ## Features
 
 - Interactive prompts for all project options
