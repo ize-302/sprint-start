@@ -99,12 +99,12 @@ sprint-start
 
 Available binaries:
 
-| Binary                      | Platform          |
-| --------------------------- | ----------------- |
-| `sprint-start-linux-x64`    | Linux (x86_64)    |
-| `sprint-start-linux-arm64`  | Linux (ARM64)     |
-| `sprint-start-windows-x64`  | Windows (x86_64)  |
-| `sprint-start-darwin-x64`   | macOS (Intel)     |
+| Binary                      | Platform              |
+| --------------------------- | --------------------- |
+| `sprint-start-linux-x64`    | Linux (x86_64)        |
+| `sprint-start-linux-arm64`  | Linux (ARM64)         |
+| `sprint-start-windows-x64`  | Windows (x86_64)      |
+| `sprint-start-darwin-x64`   | macOS (Intel)         |
 | `sprint-start-darwin-arm64` | macOS (Apple Silicon) |
 
 ## Prompts
@@ -120,6 +120,7 @@ Available binaries:
 | Group               | Maven group ID            | `com.example`            |
 | Artifact            | Maven artifact ID         | `demo`                   |
 | Package name        | Root package name         | `com.example.<artifact>` |
+| Dependencies        | List of dependencies      |                          |
 | Target location     | Output directory          | `demo`                   |
 
 ## Building

@@ -1,4 +1,5 @@
 import { input, select, confirm } from "@inquirer/prompts";
+import { select as selectMultiple } from "inquirer-select-pro";
 import { writeFileSync } from "fs";
 import { spawnSync } from "child_process";
 import { join } from "path";
@@ -14,7 +15,8 @@ group_id=$6
 artifact_id=$7
 package_name=$8
 java_version=$9
-target=\${10}
+dependencies=\${10}
+target=\${11}
 
 cmd=(
   spring init
@@ -27,6 +29,7 @@ cmd=(
   --artifact-id "\$artifact_id"
   --package-name "\$package_name"
   --java-version "\$java_version"
+  --dependencies "\$dependencies"
   "\$target"
 )
 
@@ -113,6 +116,59 @@ const init = async () => {
     message: "Enter target location",
     default: "demo",
   });
+  const dependencies = await selectMultiple({
+    message: "Select dependencies",
+    options: [
+      // Core Web & Backend
+      { name: "Web (Spring MVC + Tomcat)", value: "web" },
+      {
+        name: "Reactive Web (WebFlux + Netty)",
+        value: "webflux",
+      },
+      {
+        name: "JPA / Hibernate (SQL DB)",
+        value: "data-jpa",
+      },
+      { name: "MongoDB", value: "data-mongodb" },
+      { name: "Redis", value: "data-redis" },
+      { name: "JDBC", value: "jdbc" },
+
+      // Security & Auth
+      { name: "Spring Security", value: "security" },
+      { name: "OAuth2 Client", value: "oauth2-client" },
+      {
+        name: "OAuth2 Resource Server",
+        value: "oauth2-resource-server",
+      },
+
+      // Messaging & Streaming
+      { name: "RabbitMQ (AMQP)", value: "amqp" },
+      { name: "Apache Kafka", value: "kafka" },
+      { name: "Cloud Gateway", value: "cloud-gateway" },
+      { name: "Config Client", value: "cloud-config-client" },
+
+      // Batch & Scheduling
+      { name: "Batch Processing", value: "batch" },
+      { name: "Quartz Scheduler", value: "quartz" },
+
+      // Template Engines
+      { name: "Thymeleaf Templates", value: "thymeleaf" },
+      { name: "Freemarker Templates", value: "freemarker" },
+      { name: "Mustache Templates", value: "mustache" },
+
+      // Actuator & Monitoring
+      {
+        name: "Validation (Bean Validation)",
+        value: "validation",
+      },
+      {
+        name: "Actuator (Health, Metrics)",
+        value: "actuator",
+      },
+    ],
+  });
+
+  console.log(dependencies.toString());
 
   const confirmation = await confirm({ message: "Continue with setup?" });
 
@@ -132,6 +188,7 @@ const init = async () => {
         artifact_id,
         package_name,
         java_version.toString(),
+        dependencies.toString(),
         target,
       ],
       { stdio: "inherit" },
