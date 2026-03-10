@@ -26,19 +26,84 @@ bun src/cli.ts
 
 ### From binary
 
-Download the appropriate binary for your platform from the releases page and run it directly.
+Download the appropriate binary for your platform from the releases page, then follow the installation steps below.
+
+#### Linux
 
 ```bash
-./sprint-start-linux-x64
+chmod +x sprint-start-linux-x64
+mkdir -p ~/.local/bin
+mv sprint-start-linux-x64 ~/.local/bin/sprint-start
+```
+
+Make sure `~/.local/bin` is on your `PATH` (add to `~/.bashrc` or `~/.zshrc` if needed):
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Then run with:
+
+```bash
+sprint-start
+```
+
+#### macOS
+
+```bash
+chmod +x sprint-start-darwin-arm64   # or sprint-start-darwin-x64 for Intel
+mkdir -p ~/.local/bin
+mv sprint-start-darwin-arm64 ~/.local/bin/sprint-start
+```
+
+Add `~/.local/bin` to your `PATH` in `~/.zshrc` if not already present:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+If macOS blocks the binary as an unverified app, remove the quarantine attribute:
+
+```bash
+xattr -d com.apple.quarantine ~/.local/bin/sprint-start
+```
+
+Then run with:
+
+```bash
+sprint-start
+```
+
+#### Windows
+
+Move the downloaded binary to a folder of your choice, for example `C:\tools\`, then add that folder to your `PATH`:
+
+1. Open **Start** and search for **Environment Variables**
+2. Under **User variables**, select **Path** and click **Edit**
+3. Click **New** and add `C:\tools`
+4. Click **OK** to save
+
+Rename the binary for convenience:
+
+```powershell
+Rename-Item sprint-start-windows-x64.exe sprint-start.exe
+```
+
+Then run with:
+
+```powershell
+sprint-start
 ```
 
 Available binaries:
 
-- `sprint-start-linux-x64`
-- `sprint-start-linux-arm64`
-- `sprint-start-windows-x64`
-- `sprint-start-darwin-x64`
-- `sprint-start-darwin-arm64`
+| Binary                      | Platform          |
+| --------------------------- | ----------------- |
+| `sprint-start-linux-x64`    | Linux (x86_64)    |
+| `sprint-start-linux-arm64`  | Linux (ARM64)     |
+| `sprint-start-windows-x64`  | Windows (x86_64)  |
+| `sprint-start-darwin-x64`   | macOS (Intel)     |
+| `sprint-start-darwin-arm64` | macOS (Apple Silicon) |
 
 ## Prompts
 
