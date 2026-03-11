@@ -1,0 +1,27 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          { "path": "dist/sprint-start-linux-x64", "label": "Linux x64" },
+          { "path": "dist/sprint-start-linux-arm64", "label": "Linux arm64" },
+          { "path": "dist/sprint-start-windows-x64.exe", "label": "Windows x64" },
+          { "path": "dist/sprint-start-darwin-x64", "label": "macOS x64" },
+          { "path": "dist/sprint-start-darwin-arm64", "label": "macOS arm64" }
+        ]
+      }
+    ]
+  ]
+}
